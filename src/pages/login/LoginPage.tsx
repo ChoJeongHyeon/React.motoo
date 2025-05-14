@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import NavBar from "../../components/NavBar";
 const LoginPage = ()=>{
     return(
-    <div>
+    <div className={styles.loginPage}>
         <LoginForm/>
         로그인 페이지입니다.
         <NavBar/>
