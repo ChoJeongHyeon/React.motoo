@@ -9,4 +9,11 @@
     border: 1px solid black;
     margin: 0 auto;
 
+    /* 스크롤 없이 딱 1페이지 안에 꽉 맞춰서 넣기 위해 */
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-between
 }

@@ -1,6 +1,7 @@
 import styles from "./LoginPage.module.css"
 import LoginForm from "./LoginForm";
 import NavBar from "../../components/NavBar";
+
 const LoginPage = ()=>{
     return(
     <div className={styles.loginPage}>
