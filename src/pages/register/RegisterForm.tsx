@@ -1,6 +1,7 @@
 import styles from "./RegisterForm.module.css"
 import Input from "../login/Input"
 import { useState } from "react" 
+import {requestCode} from "../../axios/register"
 
 const RegisterForm = ()=> {
     const [form, setForm] =useState({
@@ -25,10 +26,16 @@ const RegisterForm = ()=> {
     const usernameCheck=()=>{
         return(console.log("중복확인"))
     }
-    const phoneNumberCheck=()=>{
-        return(console.log("인증번호 발급"))
-    }
-
+    const phoneNumberCheck = async () => {
+        try {
+            await requestCode(form.phoneNumber);
+            alert('인증번호가 전송되었습니다.');
+        } catch (error) {
+            alert('인증번호 전송 실패');
+            console.error(error);
+        }
+    };
+    
     return(
         <div className={styles.registerForm}>
             <div>회원가입</div>
