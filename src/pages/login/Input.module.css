@@ -4,9 +4,16 @@
     border: 1px solid black;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .input{
-    width: 80%;
+    width: 65%;
     height: 30px;
     margin-left: 15px;
+}
+.check{
+    width: 25%;
+    margin-right: 15px;
+    border: 1px solid black;
+    text-align: center;
 }
