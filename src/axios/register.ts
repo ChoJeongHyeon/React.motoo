@@ -11,3 +11,15 @@ export const requestCode = async (phoneNumber: string) => {
     throw error;
   }
 };
+
+export const verifyCode = async (phoneNumber:string, code: string) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/auth/verify-code', {
+      phoneNumber, code
+    });
+    return response.data;
+  } catch (error) {
+    console.error('인증 실패:', error);
+    throw error;
+  }
+};
