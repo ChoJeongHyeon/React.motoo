@@ -1,7 +1,7 @@
 import styles from "./RegisterForm.module.css"
 import Input from "../login/Input"
 import { useState } from "react" 
-import {requestCode} from "../../axios/register"
+import {requestCode, verifyCode} from "../../axios/register"
 
 const RegisterForm = ()=> {
     const [form, setForm] =useState({
@@ -32,6 +32,15 @@ const RegisterForm = ()=> {
             alert('인증번호가 전송되었습니다.');
         } catch (error) {
             alert('인증번호 전송 실패');
+            console.error(error);
+        }
+    };
+    const codeCheck = async () => {
+        try{
+            await verifyCode(form.phoneNumber, form.code);
+            alert('인증 성공');
+        } catch (error) {
+            alert('인증 실패');
             console.error(error);
         }
     };
@@ -76,6 +85,8 @@ const RegisterForm = ()=> {
              value={form.code}
              onChange={handleChange}
              placeholder="인증번호 입력" 
+             onClick={codeCheck}
+             buttonText="확인"
             />
             <Input 
              label="비밀번호"
