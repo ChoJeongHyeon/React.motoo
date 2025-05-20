@@ -2,6 +2,7 @@ import styles from "./RegisterForm.module.css"
 import Input from "../login/Input"
 import { useState } from "react" 
 import {requestCode, verifyCode} from "../../axios/register"
+import Button from "../login/Button"
 
 const RegisterForm = ()=> {
     const [form, setForm] =useState({
@@ -44,6 +45,9 @@ const RegisterForm = ()=> {
             console.error(error);
         }
     };
+    const handleRegister=()=>{
+        return(<>회원가입 로직 구현하기</>)
+    }
     
     return(
         <div className={styles.registerForm}>
@@ -104,6 +108,7 @@ const RegisterForm = ()=> {
              onChange={handleChange}
              placeholder="비밀번호 재입력" 
             />
+            <Button label="회원가입" onClick={handleRegister}/>
         </div>
     )
 }
