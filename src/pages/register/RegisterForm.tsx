@@ -1,7 +1,8 @@
 import styles from "./RegisterForm.module.css"
 import Input from "../login/Input"
 import { useState } from "react" 
-import {requestCode, verifyCode} from "../../axios/register"
+import {checkNicknameAvailable, checkUsernameAvailable, requestCode, verifyCode, responseRegister} from "../../axios/register"
+import Button from "../login/Button"
 
 const RegisterForm = ()=> {
     const [form, setForm] =useState({
@@ -20,12 +21,27 @@ const RegisterForm = ()=> {
             [name]: value,
         }));
     };
-    const nicknameCheck=()=>{
-        return(console.log("중복확인"))
-    }
-    const usernameCheck=()=>{
-        return(console.log("중복확인"))
-    }
+    // 닉네임 중복 함수
+    const nicknameCheck= async () => {
+        try {
+            await checkNicknameAvailable(form.nickname);
+            alert('사용 가능한 닉네임입니다.');
+        } catch (error) {
+            alert('중복확인 실패');
+            console.error(error);
+        }
+    };
+    // 유저id 중복 함수
+    const usernameCheck = async () => {
+        try {
+            await checkUsernameAvailable(form.username);
+            alert('사용 가능한 id입니다.');
+        } catch (error) {
+            alert('중복확인 실패');
+            console.error(error);
+        }
+    };
+    // 인증번호 발급 함수
     const phoneNumberCheck = async () => {
         try {
             await requestCode(form.phoneNumber);
@@ -35,6 +51,7 @@ const RegisterForm = ()=> {
             console.error(error);
         }
     };
+    // 인증번호 확인 함수
     const codeCheck = async () => {
         try{
             await verifyCode(form.phoneNumber, form.code);
@@ -44,6 +61,16 @@ const RegisterForm = ()=> {
             console.error(error);
         }
     };
+    // 회원가입 함수
+    const registerUser= async ()=>{
+        try{
+            await responseRegister(form.nickname, form.username, form.phoneNumber, form.password);
+            alert('인증 성공');
+        } catch(error){
+            alert('회원가입 실패');
+            console.error(error);
+        }
+    }
     
     return(
         <div className={styles.registerForm}>
@@ -104,6 +131,7 @@ const RegisterForm = ()=> {
              onChange={handleChange}
              placeholder="비밀번호 재입력" 
             />
+            <Button label="회원가입" onClick={registerUser}/>
         </div>
     )
 }
