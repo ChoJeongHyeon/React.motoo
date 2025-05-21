@@ -1,7 +1,7 @@
 import styles from "./RegisterForm.module.css"
 import Input from "../login/Input"
 import { useState } from "react" 
-import {requestCode, verifyCode} from "../../axios/register"
+import {requestCode, verifyCode, responseRegister} from "../../axios/register"
 import Button from "../login/Button"
 
 const RegisterForm = ()=> {
@@ -27,6 +27,7 @@ const RegisterForm = ()=> {
     const usernameCheck=()=>{
         return(console.log("중복확인"))
     }
+    // 인증번호 발급 함수
     const phoneNumberCheck = async () => {
         try {
             await requestCode(form.phoneNumber);
@@ -36,6 +37,7 @@ const RegisterForm = ()=> {
             console.error(error);
         }
     };
+    // 인증번호 확인 함수
     const codeCheck = async () => {
         try{
             await verifyCode(form.phoneNumber, form.code);
@@ -45,8 +47,15 @@ const RegisterForm = ()=> {
             console.error(error);
         }
     };
-    const handleRegister=()=>{
-        return(<>회원가입 로직 구현하기</>)
+    // 회원가입 함수
+    const registerUser= async ()=>{
+        try{
+            await responseRegister(form.nickname, form.username, form.phoneNumber, form.password);
+            alert('인증 성공');
+        } catch(error){
+            alert('회원가입 실패');
+            console.error(error);
+        }
     }
     
     return(
@@ -108,7 +117,7 @@ const RegisterForm = ()=> {
              onChange={handleChange}
              placeholder="비밀번호 재입력" 
             />
-            <Button label="회원가입" onClick={handleRegister}/>
+            <Button label="회원가입" onClick={registerUser}/>
         </div>
     )
 }
