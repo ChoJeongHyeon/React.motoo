@@ -1,7 +1,7 @@
 import styles from "./RegisterForm.module.css"
 import Input from "../login/Input"
 import { useState } from "react" 
-import {requestCode, verifyCode, responseRegister} from "../../axios/register"
+import {checkNicknameAvailable, checkUsernameAvailable, requestCode, verifyCode, responseRegister} from "../../axios/register"
 import Button from "../login/Button"
 
 const RegisterForm = ()=> {
@@ -21,12 +21,26 @@ const RegisterForm = ()=> {
             [name]: value,
         }));
     };
-    const nicknameCheck=()=>{
-        return(console.log("중복확인"))
-    }
-    const usernameCheck=()=>{
-        return(console.log("중복확인"))
-    }
+    // 닉네임 중복 함수
+    const nicknameCheck= async () => {
+        try {
+            await checkNicknameAvailable(form.nickname);
+            alert('사용 가능한 닉네임입니다.');
+        } catch (error) {
+            alert('중복확인 실패');
+            console.error(error);
+        }
+    };
+    // 유저id 중복 함수
+    const usernameCheck = async () => {
+        try {
+            await checkUsernameAvailable(form.username);
+            alert('사용 가능한 id입니다.');
+        } catch (error) {
+            alert('중복확인 실패');
+            console.error(error);
+        }
+    };
     // 인증번호 발급 함수
     const phoneNumberCheck = async () => {
         try {
