@@ -3,10 +3,12 @@ import axios from 'axios';
 import { api } from './axiosInstance';
 
 // 닉네임 중복 확인
+// post와 달리 get요청 -> 2번째 인자가 요청 옵션 객체로 들어간다.
+// { params: { ... } } 다음과 같이 작성하지 않으면 header로 착각할 수 있다.
 export const checkNicknameAvailable = async (nickname: string) => {
   try{
-    const response = await api.post('/auth/nickname-check', {
-      nickname,
+    const response = await api.get('/auth/nickname-check', {
+      params: { nickname },
     });
     return response.data;
   } catch(error){
@@ -18,8 +20,8 @@ export const checkNicknameAvailable = async (nickname: string) => {
 // id 중복 확인
 export const checkUsernameAvailable = async (username: string) => {
   try{
-    const response = await api.post('/auth/username-check', {
-      username,
+    const response = await api.get('/auth/username-check', {
+      params: { username },
     });
     return response.data;
   } catch(error){
