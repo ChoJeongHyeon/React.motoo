@@ -1,46 +1,63 @@
+import Input from "./Input";
+import Button from "./Button";
 import styles from "./LoginForm.module.css"
 import { useState } from "react";
+import {signIn} from "../../axios/login"
+
 
 const LoginForm = ()=>{
+    const [form, setForm] =useState({
+        username:'',
+        password:'',
+    })
 
-    const [id, setId] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const handleId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-  };
-    const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+            setForm((prevForm) => ({
+                ...prevForm,
+                [name]: value,
+            }));
+        };
+
+    const loginUser = async () => {
+         try {
+             await signIn(form.username, form.password);
+             alert('로그인 성공');
+           } catch (error) {
+             alert('로그인 실패');
+             console.error(error);
+          }
+      };
+
 
     return(
     <form className={styles.loginForm}>
          <div>
-            <div >아이디</div>
-            <div className={styles.inputBox}>
-                <input 
-                 type="text"
-                 value={id}
-                 onChange={handleId}
-                 placeholder="아이디 입력"
-                 className={styles.input}/>
-            </div>
+            <Input 
+             label="아이디"
+             type="text" 
+             name="username" 
+             value={form.username}
+             onChange={handleChange}
+             placeholder="아이디 입력" 
+             buttonText="중복확인"
+            />
          </div>
          <div>
-            <div>비밀번호</div>
-            <div className={styles.inputBox}>
-                <input 
-                 type="password"
-                 value={password}
-                 onChange={handlePassword}
-                 placeholder="비밀번호 입력"
-                 className={styles.input}/>
-            </div>
+            <Input 
+             label="비밀번호"
+             type="password" 
+             name="password" 
+             value={form.password}
+             onChange={handleChange}
+             placeholder="비밀번호 입력" 
+            />
         </div> 
         <div>
           <input type="checkbox"/>자동로그인하기
         </div>
         <div className={styles.register}> 계정이 없으신가요? </div>
-        <div className={styles.button}>로그인버튼</div>
+        <Button label="로그인" onClick={loginUser}/>
     </form>
  )
 }
