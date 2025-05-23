@@ -7,7 +7,7 @@ import { api } from './axiosInstance';
 // { params: { ... } } 다음과 같이 작성하지 않으면 header로 착각할 수 있다.
 export const checkNicknameAvailable = async (nickname: string) => {
   try{
-    const response = await api.get('/auth/nickname-check', {
+    const response = await api.get('/auth/check-nickname', {
       params: { nickname },
     });
     return response.data;
@@ -20,7 +20,7 @@ export const checkNicknameAvailable = async (nickname: string) => {
 // id 중복 확인
 export const checkUsernameAvailable = async (username: string) => {
   try{
-    const response = await api.get('/auth/username-check', {
+    const response = await api.get('/auth/check-username', {
       params: { username },
     });
     return response.data;
